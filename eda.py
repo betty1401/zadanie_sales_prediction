@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sb
+from sklearn.preprocessing import LabelEncoder
 
 # Importing datasets
 test = pd.read_csv("datasets/test.csv")
@@ -37,7 +38,7 @@ for catCols in categoriesTempDf:
     catCount.plot(kind="bar")
     plt.xlabel(catCols)
     plt.ylabel("Count")
-    plt.show()
+    # plt.show()
 
 ## Preprocessing and data preparation
 train["Item_Fat_Content"] = train["Item_Fat_Content"].replace(
@@ -52,3 +53,7 @@ train["Item_Fat_Content"] = train["Item_Fat_Content"].replace(
 
 train["Outlet_Size"] = train["Outlet_Size"].fillna(train["Outlet_Size"].mode()[0])
 train["Item_Weight"] = train["Item_Weight"].fillna(train["Item_Weight"].mean())
+
+
+for catCols in catList:
+    train[catCols] = LabelEncoder().fit_transform(train[catCols])
